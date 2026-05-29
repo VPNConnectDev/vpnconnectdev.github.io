@@ -1,0 +1,73 @@
+site_name: VPNConnect
+site_url: https://vpnconnectdev.github.io
+site_description: Open-source Pulse Secure VPN client for Linux, macOS, and Windows
+#repo_url: https://github.com/vpnconnectdev/vpnconnect
+#repo_name: vpnconnectdev/vpnconnect
+
+docs_dir: .
+site_dir: ../site
+
+theme:
+  name: material
+  palette:
+  # Palette toggle for automatic mode
+  - media: "(prefers-color-scheme)"
+    toggle:
+      icon: material/brightness-auto
+      name: Switch to light mode
+
+  # Palette toggle for light mode
+  - media: "(prefers-color-scheme: light)"
+    scheme: default 
+    toggle:
+      icon: material/brightness-7
+      name: Switch to dark mode
+
+  # Palette toggle for dark mode
+  - media: "(prefers-color-scheme: dark)"
+    scheme: slate
+    toggle:
+      icon: material/brightness-4
+      name: Switch to system preference
+  features:
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+  logo: assets/vpnconnect_white.png
+  favicon: assets/vpnconnect_white.png
+extra:
+  generator: false
+  version: !ENV [VERSION, "latest"]
+
+plugins:
+  - search
+  - macros
+
+markdown_extensions:
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - tables
+
+nav:
+  - Home: README.md
+  - Downloads: downloads.md
+  - Tutorials:
+    - Getting Started: tutorials/getting-started.md
+  - How-to Guides:
+    - Install: how-to/install.md
+    - Uninstall: how-to/uninstall.md
+    - Build from Source: how-to/build-from-source.md
+    - Manage Profiles: how-to/manage-profiles.md
+    - Connect with MFA: how-to/connect-with-mfa.md
+    - Connect Standalone: how-to/connect-standalone.md
+  - Reference:
+    - CLI: reference/cli.md
+    - Protocol Attributes: reference/protocol-attributes.md
+  - Explanation:
+    - Architecture: explanation/architecture.md
+    - Pulse Protocol: explanation/pulse-protocol.md
+    - MFA Automation: explanation/mfa.md
+    - PAC File Parsing: explanation/pac-file.md
+    - Logout Flow: explanation/logout-flow.md
