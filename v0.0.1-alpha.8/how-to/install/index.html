@@ -1223,6 +1223,9 @@ sudo launchctl unload /Library/LaunchDaemons/org.vpnconnect.server.plist
 sc stop VPNConnect
 sc query VPNConnect
 </code></pre>
+<p>Daemon logs are written to the Windows Event Log. View them in Event Viewer under <strong>Windows Logs → Application</strong>, or with PowerShell:</p>
+<pre><code class="language-powershell">Get-WinEvent -LogName Application | Where-Object { $_.ProviderName -eq 'vpnconnect' }
+</code></pre>
 
 
 

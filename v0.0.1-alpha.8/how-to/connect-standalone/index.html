@@ -659,6 +659,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#a-note-on-sudo-and-profile-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A note on sudo and profile paths
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#connect-in-standalone-mode" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1064,6 +1075,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#a-note-on-sudo-and-profile-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A note on sudo and profile paths
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#connect-in-standalone-mode" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1163,8 +1185,15 @@
 <li>Root / administrator privileges in the current shell.</li>
 </ul>
 <hr />
+<h2 id="a-note-on-sudo-and-profile-paths">A note on <code>sudo</code> and profile paths</h2>
+<p>VPNConnect stores profiles in <code>~/.vpnconnect/</code>. On Linux and macOS, plain <code>sudo</code> resets <code>$HOME</code> to the root user's home directory (<code>/root</code> on Linux, <code>/var/root</code> on macOS), so VPNConnect will look for profiles there instead of your own home directory and fail to find them.</p>
+<p>Use <code>sudo -E</code> to preserve your environment:</p>
+<pre><code class="language-bash">sudo -E vpnconnect connect --profile work --standalone
+</code></pre>
+<p>On Windows, standard UAC elevation (right-click → <strong>Run as Administrator</strong>) preserves <code>%USERPROFILE%</code>, so profiles are found correctly. If you use <code>runas /user:Administrator</code>, the profile directory will point to the Administrator account's home and profiles will not be found.</p>
+<hr />
 <h2 id="connect-in-standalone-mode">Connect in standalone mode</h2>
-<pre><code class="language-bash">sudo vpnconnect connect --profile work --standalone
+<pre><code class="language-bash">sudo -E vpnconnect connect --profile work --standalone
 </code></pre>
 <p>The process blocks, printing status every 30 seconds:</p>
 <pre><code>Starting VPN connection in standalone mode...
@@ -1180,15 +1209,15 @@ Running in daemon mode (press Ctrl+C to stop)...
 <hr />
 <h2 id="with-mfa">With MFA</h2>
 <p>If the profile has <code>--mfa</code> enabled, the browser window opens before the connection. Complete the MFA prompt, then the connection proceeds as normal and the process blocks.</p>
-<pre><code class="language-bash">sudo vpnconnect connect --profile work-mfa --standalone
+<pre><code class="language-bash">sudo -E vpnconnect connect --profile work-mfa --standalone
 </code></pre>
 <hr />
 <h2 id="logging">Logging</h2>
 <p>Increase verbosity to trace connection issues:</p>
-<pre><code class="language-bash">sudo vpnconnect --log-level=debug connect --profile work --standalone
+<pre><code class="language-bash">sudo -E vpnconnect connect --profile work --standalone --log-level=debug
 </code></pre>
 <p>Logs go to stderr. Pipe or redirect as needed:</p>
-<pre><code class="language-bash">sudo vpnconnect --log-level=debug connect --profile work --standalone 2&gt;vpn.log
+<pre><code class="language-bash">sudo -E vpnconnect connect --profile work --standalone --log-level=debug 2&gt;vpn.log
 </code></pre>
 
 
