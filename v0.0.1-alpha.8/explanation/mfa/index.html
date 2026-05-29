@@ -1183,21 +1183,31 @@
 <p>This document explains how VPNConnect handles Multi-Factor Authentication (MFA) for enterprise VPN endpoints that use Microsoft Azure AD / Office 365 sign-in.</p>
 <hr />
 <h2 id="why-browser-automation">Why browser automation?</h2>
-<p>Pulse Secure VPN endpoints integrated with Microsoft SSO do not expose a machine-readable API for the authentication step. The only way to authenticate is through the browser-based sign-in flow. VPNConnect opens a real Chrome browser (via the <code>chromedp</code> library) and, optionally, automates the credential-entry steps so the user only needs to approve a push notification or enter a TOTP code.</p>
+<p>Pulse Secure VPN endpoints integrated with Microsoft SSO do not expose a machine-readable API for the authentication step. The only way to authenticate is through the browser-based sign-in flow. VPNConnect opens a real Chrome browser (via the <code>chromedp</code> library) and, optionally, automates the credential-entry steps so the user only needs to approve a push notification, enter a TOTP code, or touch a security key.</p>
 <p>The browser opens visibly so the user can complete the MFA prompt (authenticator app push, SMS code, etc.). Once the authentication succeeds, <code>vpnconnect</code> extracts the <code>DSID</code> session cookie from the browser and closes the window.</p>
 <h2 id="automation-modes">Automation modes</h2>
-<p>VPNConnect supports two modes for the browser-based authentication flow.</p>
-<p><strong>Manual mode (default)</strong></p>
+<p>VPNConnect supports three modes for the browser-based authentication flow, controlled by <code>--mfa-automation-mode</code>.</p>
+<p><strong>Manual mode (default — omit <code>--mfa-automation-mode</code>)</strong></p>
 <p>The browser navigates to the VPN endpoint URL and waits. The user fills in all credentials and completes any MFA challenge themselves. This works with any identity provider — Microsoft SSO, other SAML/OIDC providers, or custom login pages.</p>
-<p><strong>Automated mode (<code>--mfa-automate</code>)</strong></p>
+<p><strong>SSO mode (<code>--mfa-automation-mode sso</code>)</strong></p>
 <p>The browser navigates to the VPN endpoint and automatically fills in the Microsoft SSO username and password fields. The user only needs to complete the MFA challenge (push notification, TOTP code, etc.). This mode is tailored to the Microsoft Azure AD / Office 365 login page selectors and may break if Microsoft changes the page layout.</p>
 <p>Enable it permanently in the profile:</p>
 <pre><code>vpnconnect profile add --name work --endpoint https://vpn.example.com \
-  --username alice@example.com --mfa --mfa-automate
+  --username alice@example.com --mfa --mfa-automation-mode sso
 </code></pre>
 <p>Or override for a single invocation:</p>
-<pre><code>vpnconnect connect --profile work --mfa-automate
-vpnconnect mfa --profile work --mfa-automate
+<pre><code>vpnconnect connect --profile work --mfa-automation-mode sso
+vpnconnect mfa --profile work --mfa-automation-mode sso
+</code></pre>
+<p><strong>FIDO2 mode (<code>--mfa-automation-mode fido2</code>)</strong></p>
+<p>The browser navigates to the VPN endpoint and automatically clicks "Sign-in options" on the Microsoft Entra login page, then selects the passkey / security key tile. The user handles the native WebAuthn dialog (PIN entry + key touch) manually. This mode is tailored to Microsoft Entra DOM selectors and may break if Microsoft changes the page layout.</p>
+<p>Enable it permanently in the profile:</p>
+<pre><code>vpnconnect profile add --name work --endpoint https://vpn.example.com \
+  --username alice@example.com --mfa --mfa-automation-mode fido2
+</code></pre>
+<p>Or override for a single invocation:</p>
+<pre><code>vpnconnect connect --profile work --mfa-automation-mode fido2
+vpnconnect mfa --profile work --mfa-automation-mode fido2
 </code></pre>
 <hr />
 <h2 id="the-dsid-cookie">The DSID cookie</h2>
@@ -1211,17 +1221,19 @@ vpnconnect mfa --profile work --mfa-automate
 <pre><code>1.  Open Chrome (non-headless, so user sees the window)
 2.  Navigate to the VPN endpoint URL
 3.  Handle pre-auth proceed button (if present)          →  #sn-preauth-proceed_2
-4.  [auto only] Fill in username                         →  //input[@name=&quot;loginfmt&quot;]
-5.  [auto only] Click submit                             →  //input[@type=&quot;submit&quot;]
-6.  [auto only] Fill in password                         →  #passwordInput or input[name=&quot;passwd&quot;]
-7.  [auto only] Click Microsoft sign-in button           →  *[id*=idSIButton9]
-8.  User completes MFA (push / TOTP / SMS)
-9.  Handle post-auth proceed button (if present)         →  #sn-postauth-proceed_2
-10. Handle session-limit dialog (if present)             →  #postfixSID_1, #btnContinue
-11. Extract DSID cookie
-12. Close the browser and return DSID to caller
+4.  [sso only] Fill in username                          →  //input[@name=&quot;loginfmt&quot;]
+5.  [sso only] Click submit                              →  //input[@type=&quot;submit&quot;]
+6.  [sso only] Fill in password                          →  #passwordInput[name=&quot;Password&quot;] or input[name=&quot;passwd&quot;]
+7.  [sso only] Click Microsoft sign-in button            →  *[id*=idSIButton9]
+8.  [fido2 only] Click &quot;Sign-in options&quot;                 →  div[data-test-id=&quot;signinOptions&quot;]
+9.  [fido2 only] Select passkey/security key tile        →  div[data-test-cred-id=&quot;7&quot;]
+10. User completes MFA (push / TOTP / WebAuthn key touch)
+11. Handle post-auth proceed button (if present)         →  #sn-postauth-proceed_2
+12. Handle session-limit dialog (if present)             →  #postfixSID_1, #btnContinue
+13. Extract DSID cookie
+14. Close the browser and return DSID to caller
 </code></pre>
-<p>Steps 3, 9, and 10 are conditional — not all deployments show these UI elements. Steps 4–7 only run when <code>--mfa-automate</code> is enabled; in manual mode the user fills in credentials themselves.</p>
+<p>Steps 3, 11, and 12 are conditional — not all deployments show these UI elements. Steps 4–7 only run in <code>sso</code> mode; steps 8–9 only run in <code>fido2</code> mode. In manual mode the user fills in all credentials themselves.</p>
 <hr />
 <h2 id="selectors-reference">Selectors reference</h2>
 <table>
@@ -1229,44 +1241,59 @@ vpnconnect mfa --profile work --mfa-automate
 <tr>
 <th>Element</th>
 <th>Selector</th>
-<th>Notes</th>
+<th>Mode</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Pre-auth proceed button</td>
 <td><code>#sn-preauth-proceed_2</code></td>
-<td>VPN-specific; optional</td>
+<td>all (optional)</td>
 </tr>
 <tr>
 <td>Username field</td>
 <td><code>//input[@name="loginfmt"]</code></td>
-<td>Microsoft SSO standard</td>
+<td>sso</td>
 </tr>
 <tr>
 <td>Submit button</td>
 <td><code>//input[@type="submit"]</code></td>
-<td></td>
+<td>sso</td>
 </tr>
 <tr>
 <td>Password field</td>
 <td><code>#passwordInput[name="Password"]</code></td>
-<td>Microsoft SSO variant 1</td>
+<td>sso (variant 1)</td>
 </tr>
 <tr>
 <td>Password field (alt)</td>
 <td><code>input[name="passwd"]</code></td>
-<td>Microsoft SSO variant 2</td>
+<td>sso (variant 2)</td>
 </tr>
 <tr>
 <td>Sign-in button</td>
 <td><code>*[id*=idSIButton9]</code></td>
-<td>Microsoft SSO standard</td>
+<td>sso</td>
+</tr>
+<tr>
+<td>Sign-in options button</td>
+<td><code>div[data-test-id="signinOptions"]</code></td>
+<td>fido2</td>
+</tr>
+<tr>
+<td>Sign-in options button (alt)</td>
+<td><code>div[role="button"][aria-label="Sign-in options"]</code></td>
+<td>fido2</td>
+</tr>
+<tr>
+<td>Passkey / security key tile</td>
+<td><code>div[data-test-cred-id="7"]</code></td>
+<td>fido2</td>
 </tr>
 <tr>
 <td>Post-auth proceed button</td>
 <td><code>#sn-postauth-proceed_2</code></td>
-<td>VPN-specific; optional</td>
+<td>all (optional)</td>
 </tr>
 <tr>
 <td>Session-limit radio</td>
@@ -1290,8 +1317,8 @@ vpnconnect mfa --profile work --mfa-automate
 <hr />
 <h2 id="limitations">Limitations</h2>
 <ul>
-<li>In automated mode, only Microsoft Azure AD / Office 365 SSO flows are supported. Other SAML or OIDC identity providers are not tested.</li>
-<li>The CSS/XPath selectors used in automated mode are hard-coded and may break if Microsoft changes the sign-in page layout. Manual mode has no such limitation.</li>
+<li>In <code>sso</code> and <code>fido2</code> modes, only Microsoft Azure AD / Entra SSO flows are supported. Other SAML or OIDC identity providers are not tested.</li>
+<li>The CSS/XPath selectors used in <code>sso</code> and <code>fido2</code> modes are hard-coded and may break if Microsoft changes the sign-in page layout. Manual mode has no such limitation.</li>
 <li>The browser runs on the desktop; headless mode is not used because MFA challenges require user interaction.</li>
 </ul>
 

@@ -628,6 +628,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Step 1 — Create an MFA-enabled profile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-mode-any-identity-provider" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual mode (any identity provider)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sso-mode-microsoft-azure-ad-office-365" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSO mode (Microsoft Azure AD / Office 365)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fido2-mode-passkey-security-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FIDO2 mode (passkey / security key)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1061,6 +1100,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Step 1 — Create an MFA-enabled profile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-mode-any-identity-provider" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual mode (any identity provider)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sso-mode-microsoft-azure-ad-office-365" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSO mode (Microsoft Azure AD / Office 365)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fido2-mode-passkey-security-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FIDO2 mode (passkey / security key)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1114,8 +1192,8 @@
 
 
 <h1 id="how-to-connect-with-mfa">How to connect with MFA</h1>
-<p>This guide shows how to set up and use a VPN profile that uses browser-based multi-factor authentication. It covers both manual mode (any identity provider) and automated mode (Microsoft Azure AD / Office 365).</p>
-<p>For a conceptual explanation of the two modes, see <a href="../../explanation/mfa/">MFA browser automation</a>.</p>
+<p>This guide shows how to set up and use a VPN profile that uses browser-based multi-factor authentication. It covers manual mode (any identity provider), SSO mode (Microsoft Azure AD), and FIDO2 mode (passkey / security key).</p>
+<p>For a conceptual explanation of all three modes, see <a href="../../explanation/mfa/">MFA browser automation</a>.</p>
 <hr />
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
@@ -1124,6 +1202,7 @@
 </ul>
 <hr />
 <h2 id="step-1-create-an-mfa-enabled-profile">Step 1 — Create an MFA-enabled profile</h2>
+<h3 id="manual-mode-any-identity-provider">Manual mode (any identity provider)</h3>
 <pre><code class="language-bash">vpnconnect profile add \
   --name work \
   --endpoint https://vpn.example.com \
@@ -1132,23 +1211,33 @@
   --store-password=false
 </code></pre>
 <p>The <code>--mfa</code> flag enables the browser-based authentication flow. By default the browser opens at the VPN URL and waits for you to log in manually — this works with any identity provider.</p>
-<p>To have VPNConnect fill in your Microsoft SSO username and password automatically, add <code>--mfa-automate</code>:</p>
+<h3 id="sso-mode-microsoft-azure-ad-office-365">SSO mode (Microsoft Azure AD / Office 365)</h3>
 <pre><code class="language-bash">vpnconnect profile add \
   --name work \
   --endpoint https://vpn.example.com \
   --username alice@example.com \
-  --mfa --mfa-automate \
+  --mfa --mfa-automation-mode sso \
+  --store-password=true
+</code></pre>
+<p>With <code>--mfa-automation-mode sso</code>, the browser enters your username and password up to the MFA challenge, then waits for you to approve the push notification or enter a TOTP code. Requires a <code>user@domain.com</code> format username. Tailored to the Microsoft Azure AD login page.</p>
+<h3 id="fido2-mode-passkey-security-key">FIDO2 mode (passkey / security key)</h3>
+<pre><code class="language-bash">vpnconnect profile add \
+  --name work \
+  --endpoint https://vpn.example.com \
+  --username alice@example.com \
+  --mfa --mfa-automation-mode fido2 \
   --store-password=false
 </code></pre>
-<p>With <code>--mfa-automate</code>, the browser enters your credentials up to the MFA challenge, then waits for you to approve the push notification or enter a TOTP code. This mode requires a <code>user@domain.com</code> format username and is tailored to the Microsoft Azure AD login page.</p>
+<p>With <code>--mfa-automation-mode fido2</code>, the browser clicks through to the passkey / security key option on the Microsoft Entra sign-in page. You handle the native WebAuthn dialog (PIN entry + key touch) yourself.</p>
 <hr />
 <h2 id="step-2-connect">Step 2 — Connect</h2>
 <pre><code class="language-bash">vpnconnect connect --profile work
 </code></pre>
 <p>A Chrome browser window opens and navigates to the VPN endpoint. Complete any login steps and the MFA challenge. The window closes automatically once the DSID cookie is obtained.</p>
 <p>The connection is then handed to the daemon and the <code>connect</code> command returns.</p>
-<p>To override the automation setting for a single invocation without editing the profile:</p>
-<pre><code class="language-bash">vpnconnect connect --profile work --mfa-automate
+<p>To override the automation mode for a single invocation without editing the profile:</p>
+<pre><code class="language-bash">vpnconnect connect --profile work --mfa-automation-mode sso
+vpnconnect connect --profile work --mfa-automation-mode fido2
 </code></pre>
 <hr />
 <h2 id="pre-authenticating-optional">Pre-authenticating (optional)</h2>
@@ -1171,9 +1260,14 @@
 </thead>
 <tbody>
 <tr>
-<td>Browser opens but automated login fails immediately</td>
-<td>Wrong username format (automated mode)</td>
+<td>Browser opens but SSO login fails immediately</td>
+<td>Wrong username format</td>
 <td>Use <code>user@domain.com</code></td>
+</tr>
+<tr>
+<td>FIDO2: "sign-in options button not found"</td>
+<td>Microsoft page layout changed</td>
+<td>Fall back to manual mode; check logs with <code>--log-level=debug</code></td>
 </tr>
 <tr>
 <td>"MFA failed" error after browser closes</td>
@@ -1191,9 +1285,9 @@
 <td>Click through the dialog to replace the old session; <code>vpnconnect</code> handles this automatically</td>
 </tr>
 <tr>
-<td>Automated mode fails at password field</td>
+<td>SSO mode fails at password field</td>
 <td>Microsoft page layout changed</td>
-<td>Remove <code>--mfa-automate</code> and complete the form manually, or check logs for selector errors</td>
+<td>Remove <code>--mfa-automation-mode</code> and complete the form manually, or check logs for selector errors</td>
 </tr>
 </tbody>
 </table>
