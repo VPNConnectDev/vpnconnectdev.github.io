@@ -1,0 +1,42 @@
+site_name: VPNConnect
+site_url: https://vpnconnectdev.github.io
+site_description: Open-source Pulse Secure VPN client for Linux, macOS, and Windows
+repo_url: https://github.com/vpnconnectdev/vpnconnect
+repo_name: vpnconnectdev/vpnconnect
+
+docs_dir: .
+site_dir: ../site
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: indigo
+    accent: indigo
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+
+nav:
+  - Home: README.md
+  - Downloads: downloads.md
+  - Tutorials:
+    - Getting Started: tutorials/getting-started.md
+  - How-to Guides:
+    - Install: how-to/install.md
+    - Uninstall: how-to/uninstall.md
+    - Build from Source: how-to/build-from-source.md
+    - Manage Profiles: how-to/manage-profiles.md
+    - Connect with MFA: how-to/connect-with-mfa.md
+    - Connect Standalone: how-to/connect-standalone.md
+  - Reference:
+    - CLI: reference/cli.md
+    - Protocol Attributes: reference/protocol-attributes.md
+  - Explanation:
+    - Architecture: explanation/architecture.md
+    - Pulse Protocol: explanation/pulse-protocol.md
+    - MFA Automation: explanation/mfa.md
+    - PAC File Parsing: explanation/pac-file.md
+    - Logout Flow: explanation/logout-flow.md

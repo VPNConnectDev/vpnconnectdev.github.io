@@ -1,0 +1,2685 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source Pulse Secure VPN client for Linux, macOS, and Windows">
+      
+      
+      
+        <link rel="canonical" href="https://vpnconnectdev.github.io/reference/cli/">
+      
+      
+        <link rel="prev" href="../../how-to/connect-standalone/">
+      
+      
+        <link rel="next" href="../protocol-attributes/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>CLI - VPNConnect</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cli-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="VPNConnect" class="md-header__button md-logo" aria-label="VPNConnect" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            VPNConnect
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CLI
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vpnconnectdev/vpnconnect" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vpnconnectdev/vpnconnect
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="VPNConnect" class="md-nav__button md-logo" aria-label="VPNConnect" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    VPNConnect
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vpnconnectdev/vpnconnect" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vpnconnectdev/vpnconnect
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../downloads/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Downloads
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How-to Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/uninstall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Uninstall
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/build-from-source/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build from Source
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/manage-profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manage Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/connect-with-mfa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect with MFA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/connect-standalone/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect Standalone
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#global-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global flags
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vpnconnect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vpnconnect
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        connect
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="connect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disconnect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        disconnect
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="disconnect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        status
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="status">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#examples_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        statistics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="statistics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#examples_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mfa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mfa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="mfa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        profile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="profile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subcommands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subcommands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        profile add
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="profile add">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        profile list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        profile remove
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="profile remove">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-rename" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        profile rename
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="profile rename">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-set-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        profile set-password
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="profile set-password">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        server
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tuntap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tuntap
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="tuntap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subcommands_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subcommands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuntap-create" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tuntap create
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="tuntap create">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuntap-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tuntap remove
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="tuntap remove">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuntap-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tuntap list
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ui
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        version
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../protocol-attributes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protocol Attributes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Explanation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Explanation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/pulse-protocol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pulse Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/mfa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MFA Automation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/pac-file/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PAC File Parsing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/logout-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logout Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#global-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global flags
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vpnconnect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vpnconnect
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        connect
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="connect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disconnect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        disconnect
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="disconnect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        status
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="status">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#examples_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        statistics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="statistics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#examples_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mfa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mfa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="mfa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        profile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="profile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subcommands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subcommands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        profile add
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="profile add">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        profile list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        profile remove
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="profile remove">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-rename" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        profile rename
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="profile rename">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-set-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        profile set-password
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="profile set-password">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        server
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tuntap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tuntap
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="tuntap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subcommands_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subcommands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuntap-create" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tuntap create
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="tuntap create">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuntap-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tuntap remove
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="tuntap remove">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flags_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuntap-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tuntap list
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ui
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        version
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="cli-reference">CLI Reference</h1>
+<p>Complete reference for all <code>vpnconnect</code> commands, subcommands, and flags.</p>
+<blockquote>
+<p><strong>Tip:</strong> Run <code>vpnconnect &lt;command&gt; --help</code> at any time to see inline help for that command.</p>
+</blockquote>
+<hr />
+<h2 id="global-flags">Global flags</h2>
+<p>These flags are available on every command.</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--log-level</code></td>
+<td><code>warn</code></td>
+<td>Log verbosity. One of: <code>trace</code>, <code>debug</code>, <code>info</code>, <code>warn</code>, <code>error</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="vpnconnect"><code>vpnconnect</code></h2>
+<pre><code>vpnconnect [command] [flags]
+</code></pre>
+<p>VPN client with TUN/TAP interface management and Pulse protocol support. If no command is given, the graphical UI is launched (equivalent to <code>vpnconnect ui</code>).</p>
+<hr />
+<h2 id="connect"><code>connect</code></h2>
+<p>Establish a VPN connection to a Juniper Pulse endpoint using a saved profile.</p>
+<pre><code>vpnconnect connect [flags]
+</code></pre>
+<h3 id="flags">Flags</h3>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--profile</code></td>
+<td><code>""</code></td>
+<td>Name of the profile to use. If omitted, the default profile is used</td>
+</tr>
+<tr>
+<td><code>--standalone</code></td>
+<td><code>false</code></td>
+<td>Run without the daemon. The connection is managed entirely in the current process. Requires root/administrator privileges</td>
+</tr>
+<tr>
+<td><code>--prompt-password</code></td>
+<td><code>false</code></td>
+<td>Prompt for a password even when one is stored in the OS keychain</td>
+</tr>
+<tr>
+<td><code>--merge-dns</code></td>
+<td><code>false</code></td>
+<td>Merge the profile's DNS list with the server-provided DNS list instead of replacing it</td>
+</tr>
+<tr>
+<td><code>--mfa-automate</code></td>
+<td><code>false</code></td>
+<td>Automate Microsoft SSO credential entry during MFA. Overrides the profile's <code>mfa_automate</code> setting for this invocation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="notes">Notes</h3>
+<ul>
+<li>In normal (non-standalone) mode <code>connect</code> sends the connection request to the running daemon and returns immediately. The daemon manages the interface lifecycle.</li>
+<li>In <code>--standalone</code> mode the process blocks until interrupted (<code>Ctrl+C</code> / <code>SIGTERM</code>). See <a href="../../how-to/connect-standalone/">How to connect in standalone mode</a>.</li>
+<li>If the profile has <code>MFAEnabled: true</code> and no cached DSID cookie is available, the MFA browser flow is triggered automatically before sending the connection request. By default the browser waits for manual login; pass <code>--mfa-automate</code> to have credentials filled automatically (Microsoft SSO only).</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<pre><code class="language-bash"># Connect using the profile named &quot;work&quot;
+vpnconnect connect --profile work
+
+# Connect without a daemon, running in the foreground
+sudo vpnconnect connect --profile work --standalone
+
+# Always prompt for a password (ignores stored keychain entry)
+vpnconnect connect --profile work --prompt-password
+
+# Enable Microsoft SSO automation for this connection only
+vpnconnect connect --profile work --mfa-automate
+</code></pre>
+<hr />
+<h2 id="disconnect"><code>disconnect</code></h2>
+<p>Disconnect from an active Pulse VPN connection and restore network settings.</p>
+<pre><code>vpnconnect disconnect [flags]
+</code></pre>
+<h3 id="flags_1">Flags</h3>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--profile</code></td>
+<td><code>""</code></td>
+<td>Profile name (optional). When omitted, the active connection is disconnected</td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples_1">Examples</h3>
+<pre><code class="language-bash">vpnconnect disconnect
+vpnconnect disconnect --profile work
+</code></pre>
+<hr />
+<h2 id="status"><code>status</code></h2>
+<p>Query the daemon for the current VPN connection state and details.</p>
+<pre><code>vpnconnect status
+</code></pre>
+<p>No flags. Prints the current connection state and per-connection details (endpoint, interface, IP address, etc.) reported by the daemon.</p>
+<h3 id="examples_2">Examples</h3>
+<pre><code class="language-bash">vpnconnect status
+</code></pre>
+<hr />
+<h2 id="statistics"><code>statistics</code></h2>
+<p>Query the daemon for live packet and byte counters for the active VPN connection.</p>
+<pre><code>vpnconnect statistics
+</code></pre>
+<p>No flags. Prints transmitted and received packet/byte counts.</p>
+<h3 id="examples_3">Examples</h3>
+<pre><code class="language-bash">vpnconnect statistics
+</code></pre>
+<hr />
+<h2 id="mfa"><code>mfa</code></h2>
+<p>Perform only the MFA (browser) authentication step for a profile and cache the resulting DSID cookie. Useful for pre-authenticating before a <code>connect</code> without triggering the browser popup at connect time.</p>
+<pre><code>vpnconnect mfa --profile &lt;name&gt;
+</code></pre>
+<h3 id="flags_2">Flags</h3>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--profile</code></td>
+<td>Yes</td>
+<td>—</td>
+<td>Profile name to authenticate</td>
+</tr>
+<tr>
+<td><code>--mfa-automate</code></td>
+<td>No</td>
+<td><code>false</code></td>
+<td>Automate Microsoft SSO credential entry. Overrides the profile's <code>mfa_automate</code> setting for this invocation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples_4">Examples</h3>
+<pre><code class="language-bash">vpnconnect mfa --profile work
+
+# Enable Microsoft SSO automation for this pre-authentication only
+vpnconnect mfa --profile work --mfa-automate
+</code></pre>
+<hr />
+<h2 id="profile"><code>profile</code></h2>
+<p>Manage VPN profiles. Profiles store the endpoint URL, username, and connection options. Passwords are stored separately in the OS keychain.</p>
+<pre><code>vpnconnect profile &lt;subcommand&gt; [flags]
+</code></pre>
+<h3 id="subcommands">Subcommands</h3>
+<table>
+<thead>
+<tr>
+<th>Subcommand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add</code></td>
+<td>Create a new profile</td>
+</tr>
+<tr>
+<td><code>list</code></td>
+<td>List all saved profiles</td>
+</tr>
+<tr>
+<td><code>remove</code></td>
+<td>Delete a profile</td>
+</tr>
+<tr>
+<td><code>rename</code></td>
+<td>Rename a profile</td>
+</tr>
+<tr>
+<td><code>set-password</code></td>
+<td>Set or update the keychain password for a profile</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="profile-add"><code>profile add</code></h3>
+<p>Create a new Pulse VPN profile.</p>
+<pre><code>vpnconnect profile add --name &lt;name&gt; --endpoint &lt;url&gt; --username &lt;user&gt; [flags]
+</code></pre>
+<h4 id="flags_3">Flags</h4>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--name</code></td>
+<td>Yes</td>
+<td>—</td>
+<td>Unique profile name</td>
+</tr>
+<tr>
+<td><code>--endpoint</code></td>
+<td>Yes</td>
+<td>—</td>
+<td>VPN endpoint URL (e.g. <code>https://vpn.example.com</code>)</td>
+</tr>
+<tr>
+<td><code>--username</code></td>
+<td>Yes</td>
+<td>—</td>
+<td>Username for authentication</td>
+</tr>
+<tr>
+<td><code>--password</code></td>
+<td>No</td>
+<td><code>""</code></td>
+<td>Password. If omitted and <code>--store-password</code> is true, you will be prompted</td>
+</tr>
+<tr>
+<td><code>--mfa</code></td>
+<td>No</td>
+<td><code>false</code></td>
+<td>Enable browser-based MFA for this profile</td>
+</tr>
+<tr>
+<td><code>--mfa-automate</code></td>
+<td>No</td>
+<td><code>false</code></td>
+<td>Automate Microsoft SSO credential entry during MFA. Requires <code>--mfa</code>. Tailored to the Microsoft Azure AD login page</td>
+</tr>
+<tr>
+<td><code>--store-password</code></td>
+<td>No</td>
+<td><code>true</code></td>
+<td>Store the password in the OS keychain</td>
+</tr>
+<tr>
+<td><code>--merge-dns</code></td>
+<td>No</td>
+<td><code>false</code></td>
+<td>Merge profile DNS with server DNS instead of replacing</td>
+</tr>
+</tbody>
+</table>
+<h4 id="examples_5">Examples</h4>
+<pre><code class="language-bash"># Basic profile, password stored in keychain
+vpnconnect profile add --name work --endpoint https://vpn.example.com --username alice
+
+# Profile with MFA (manual mode — works with any identity provider)
+vpnconnect profile add --name work-mfa \
+  --endpoint https://vpn.example.com \
+  --username alice \
+  --mfa \
+  --store-password=false
+
+# Profile with MFA and automated Microsoft SSO credential entry
+vpnconnect profile add --name work-mfa \
+  --endpoint https://vpn.example.com \
+  --username alice@example.com \
+  --mfa --mfa-automate \
+  --store-password=false
+</code></pre>
+<hr />
+<h3 id="profile-list"><code>profile list</code></h3>
+<p>Display all saved profiles.</p>
+<pre><code>vpnconnect profile list
+</code></pre>
+<p>No flags. Prints a table with name, endpoint, username, MFA status, merge-DNS setting, and creation date.</p>
+<hr />
+<h3 id="profile-remove"><code>profile remove</code></h3>
+<p>Delete a profile and its associated credentials.</p>
+<pre><code>vpnconnect profile remove --name &lt;name&gt;
+</code></pre>
+<h4 id="flags_4">Flags</h4>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--name</code></td>
+<td>Yes</td>
+<td>Name of the profile to delete</td>
+</tr>
+</tbody>
+</table>
+<p>You will be asked to confirm before deletion.</p>
+<hr />
+<h3 id="profile-rename"><code>profile rename</code></h3>
+<p>Rename a profile.</p>
+<pre><code>vpnconnect profile rename --old-name &lt;name&gt; --new-name &lt;name&gt;
+</code></pre>
+<h4 id="flags_5">Flags</h4>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--old-name</code></td>
+<td>Yes</td>
+<td>Current profile name</td>
+</tr>
+<tr>
+<td><code>--new-name</code></td>
+<td>Yes</td>
+<td>New profile name</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="profile-set-password"><code>profile set-password</code></h3>
+<p>Set or update the password stored in the OS keychain for a profile.</p>
+<pre><code>vpnconnect profile set-password --name &lt;name&gt; [--password &lt;password&gt;]
+</code></pre>
+<h4 id="flags_6">Flags</h4>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--name</code></td>
+<td>Yes</td>
+<td>Profile name</td>
+</tr>
+<tr>
+<td><code>--password</code></td>
+<td>No</td>
+<td>New password. If omitted, you will be prompted</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="server"><code>server</code></h2>
+<p>Start the VPNConnect background daemon. The daemon listens on a random local TCP port and manages the VPN interface lifecycle on behalf of <code>connect</code>, <code>disconnect</code>, and other client commands.</p>
+<pre><code>sudo vpnconnect server
+</code></pre>
+<p>No flags. <strong>Requires root / administrator privileges.</strong> Intended to be run as a system service (systemd, launchd, Windows Service). See <a href="../../how-to/install/">How to install VPNConnect</a> for service configuration.</p>
+<p>The daemon writes a server info file (port + auth token) at a platform-specific path so that client commands can locate it:</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux</td>
+<td><code>/run/vpnconnect/server.json</code></td>
+</tr>
+<tr>
+<td>macOS</td>
+<td><code>/var/run/vpnconnect/server.json</code></td>
+</tr>
+<tr>
+<td>Windows</td>
+<td><code>%ProgramData%\vpnconnect\server.json</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="tuntap"><code>tuntap</code></h2>
+<p>Manage TUN/TAP network interfaces directly, bypassing the daemon. Useful for debugging or scripted environments.</p>
+<pre><code>vpnconnect tuntap &lt;subcommand&gt; [flags]
+</code></pre>
+<h3 id="subcommands_1">Subcommands</h3>
+<table>
+<thead>
+<tr>
+<th>Subcommand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>create</code></td>
+<td>Create and configure a TUN/TAP interface</td>
+</tr>
+<tr>
+<td><code>remove</code></td>
+<td>Remove an existing interface</td>
+</tr>
+<tr>
+<td><code>list</code></td>
+<td>List all TUN/TAP interfaces on the system</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="tuntap-create"><code>tuntap create</code></h3>
+<p>Create and configure a new TUN/TAP interface. Requires root/administrator privileges.</p>
+<pre><code>vpnconnect tuntap create --name &lt;name&gt; --type &lt;tun|tap&gt; --ip &lt;addr&gt; --netmask &lt;mask&gt; [flags]
+</code></pre>
+<h4 id="flags_7">Flags</h4>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--name</code></td>
+<td>Yes</td>
+<td>—</td>
+<td>Interface name (e.g. <code>vpn0</code>, <code>tun1</code>)</td>
+</tr>
+<tr>
+<td><code>--type</code></td>
+<td>Yes</td>
+<td>—</td>
+<td>Interface type: <code>tun</code> or <code>tap</code></td>
+</tr>
+<tr>
+<td><code>--ip</code></td>
+<td>Yes</td>
+<td>—</td>
+<td>IP address to assign</td>
+</tr>
+<tr>
+<td><code>--netmask</code></td>
+<td>Yes</td>
+<td>—</td>
+<td>Netmask (e.g. <code>255.255.255.0</code>)</td>
+</tr>
+<tr>
+<td><code>--mtu</code></td>
+<td>No</td>
+<td><code>0</code></td>
+<td>MTU for the interface. <code>0</code> uses the system default</td>
+</tr>
+<tr>
+<td><code>--routes</code></td>
+<td>No</td>
+<td>—</td>
+<td>Additional routes to add (repeatable, CIDR notation)</td>
+</tr>
+<tr>
+<td><code>--dns</code></td>
+<td>No</td>
+<td>—</td>
+<td>DNS servers to configure (repeatable)</td>
+</tr>
+<tr>
+<td><code>--up-script</code></td>
+<td>No</td>
+<td><code>""</code></td>
+<td>Script to run after the interface is up</td>
+</tr>
+<tr>
+<td><code>--down-script</code></td>
+<td>No</td>
+<td><code>""</code></td>
+<td>Script to run before the interface is removed</td>
+</tr>
+<tr>
+<td><code>--persist</code></td>
+<td>No</td>
+<td><code>false</code></td>
+<td>Keep the interface after the process exits</td>
+</tr>
+<tr>
+<td><code>--daemon</code></td>
+<td>No</td>
+<td><code>false</code></td>
+<td>Block and keep the interface up until interrupted</td>
+</tr>
+</tbody>
+</table>
+<h4 id="examples_6">Examples</h4>
+<pre><code class="language-bash">sudo vpnconnect tuntap create \
+  --name vpn0 \
+  --type tun \
+  --ip 10.0.0.2 \
+  --netmask 255.255.255.0 \
+  --mtu 1400 \
+  --daemon
+</code></pre>
+<hr />
+<h3 id="tuntap-remove"><code>tuntap remove</code></h3>
+<p>Remove an existing TUN/TAP interface.</p>
+<pre><code>vpnconnect tuntap remove --name &lt;name&gt;
+</code></pre>
+<h4 id="flags_8">Flags</h4>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--name</code></td>
+<td>Yes</td>
+<td>Interface name to remove</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="tuntap-list"><code>tuntap list</code></h3>
+<p>List all TUN/TAP interfaces currently present on the system.</p>
+<pre><code>vpnconnect tuntap list
+</code></pre>
+<p>No flags.</p>
+<hr />
+<h2 id="ui"><code>ui</code></h2>
+<p>Launch the graphical user interface. This is the default command when <code>vpnconnect</code> is invoked with no arguments.</p>
+<pre><code>vpnconnect ui
+</code></pre>
+<p>No flags. Opens the Wails-based desktop application. Only one instance is permitted (enforced via <code>UniqueID: com.vpnconnect.ui</code>); a second invocation will focus the existing window.</p>
+<hr />
+<h2 id="version"><code>version</code></h2>
+<p>Print build version information.</p>
+<pre><code>vpnconnect version
+</code></pre>
+<p>No flags. Prints the version string, git commit hash, and build date.</p>
+<h3 id="example-output">Example output</h3>
+<pre><code>vpnconnect version: 1.0.0
+commit: abc1234
+build date: 2026-04-10
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
