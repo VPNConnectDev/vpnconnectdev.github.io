@@ -632,6 +632,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#from-the-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From the CLI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="From the CLI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#manual-mode-any-identity-provider" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -658,6 +670,22 @@
     <span class="md-ellipsis">
       
         FIDO2 mode (passkey / security key)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-the-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From the UI
       
     </span>
   </a>
@@ -1104,6 +1132,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#from-the-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From the CLI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="From the CLI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#manual-mode-any-identity-provider" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1130,6 +1170,22 @@
     <span class="md-ellipsis">
       
         FIDO2 mode (passkey / security key)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-the-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From the UI
       
     </span>
   </a>
@@ -1202,7 +1258,8 @@
 </ul>
 <hr />
 <h2 id="step-1-create-an-mfa-enabled-profile">Step 1 — Create an MFA-enabled profile</h2>
-<h3 id="manual-mode-any-identity-provider">Manual mode (any identity provider)</h3>
+<h3 id="from-the-cli">From the CLI</h3>
+<h4 id="manual-mode-any-identity-provider">Manual mode (any identity provider)</h4>
 <pre><code class="language-bash">vpnconnect profile add \
   --name work \
   --endpoint https://vpn.example.com \
@@ -1211,7 +1268,7 @@
   --store-password=false
 </code></pre>
 <p>The <code>--mfa</code> flag enables the browser-based authentication flow. By default the browser opens at the VPN URL and waits for you to log in manually — this works with any identity provider.</p>
-<h3 id="sso-mode-microsoft-azure-ad-office-365">SSO mode (Microsoft Azure AD / Office 365)</h3>
+<h4 id="sso-mode-microsoft-azure-ad-office-365">SSO mode (Microsoft Azure AD / Office 365)</h4>
 <pre><code class="language-bash">vpnconnect profile add \
   --name work \
   --endpoint https://vpn.example.com \
@@ -1220,7 +1277,7 @@
   --store-password=true
 </code></pre>
 <p>With <code>--mfa-automation-mode sso</code>, the browser enters your username and password up to the MFA challenge, then waits for you to approve the push notification or enter a TOTP code. Requires a <code>user@domain.com</code> format username. Tailored to the Microsoft Azure AD login page.</p>
-<h3 id="fido2-mode-passkey-security-key">FIDO2 mode (passkey / security key)</h3>
+<h4 id="fido2-mode-passkey-security-key">FIDO2 mode (passkey / security key)</h4>
 <pre><code class="language-bash">vpnconnect profile add \
   --name work \
   --endpoint https://vpn.example.com \
@@ -1229,6 +1286,32 @@
   --store-password=false
 </code></pre>
 <p>With <code>--mfa-automation-mode fido2</code>, the browser clicks through to the passkey / security key option on the Microsoft Entra sign-in page. You handle the native WebAuthn dialog (PIN entry + key touch) yourself.</p>
+<h3 id="from-the-ui">From the UI</h3>
+<p>In the <strong>Add Profile</strong> (or <strong>Edit Profile</strong>) form, check <strong>MFA Enabled</strong>. An <strong>Automation Mode</strong> selector appears with three options:</p>
+<p><img alt="Add Profile form with MFA Enabled checked and Automation Mode options visible" src="../../assets/mfa_configuration.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Manual</strong></td>
+<td>Browser opens; you complete all login steps yourself. Works with any identity provider.</td>
+</tr>
+<tr>
+<td><strong>Automate Microsoft SSO</strong></td>
+<td>Browser fills username and password automatically, then waits at the MFA challenge. Requires <code>user@domain.com</code> username format.</td>
+</tr>
+<tr>
+<td><strong>Automate FIDO2 / YubiKey</strong></td>
+<td>Browser navigates to the security key option on the Microsoft Entra page; you touch the key when prompted.</td>
+</tr>
+</tbody>
+</table>
+<p>Select the option that matches your organisation's login flow, then fill in the remaining fields and click <strong>Save Profile</strong>.</p>
 <hr />
 <h2 id="step-2-connect">Step 2 — Connect</h2>
 <pre><code class="language-bash">vpnconnect connect --profile work

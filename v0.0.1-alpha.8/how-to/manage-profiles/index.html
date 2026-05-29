@@ -593,10 +593,38 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#from-the-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From the CLI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="From the CLI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#create-a-profile-with-mfa-enabled" class="md-nav__link">
     <span class="md-ellipsis">
       
         Create a profile with MFA enabled
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-the-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From the UI
       
     </span>
   </a>
@@ -649,6 +677,34 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Remove a profile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-the-cli_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From the CLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-the-ui_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From the UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1121,10 +1177,38 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#from-the-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From the CLI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="From the CLI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#create-a-profile-with-mfa-enabled" class="md-nav__link">
     <span class="md-ellipsis">
       
         Create a profile with MFA enabled
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-the-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From the UI
       
     </span>
   </a>
@@ -1177,6 +1261,34 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Remove a profile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-the-cli_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From the CLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-the-ui_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From the UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1252,6 +1364,7 @@
 <p>For a full description of all flags, see the <a href="../../reference/cli/#profile">CLI reference</a>.</p>
 <hr />
 <h2 id="create-a-profile">Create a profile</h2>
+<h3 id="from-the-cli">From the CLI</h3>
 <pre><code class="language-bash">vpnconnect profile add \
   --name work \
   --endpoint https://vpn.example.com \
@@ -1264,7 +1377,7 @@
   --username alice \
   --store-password=false
 </code></pre>
-<h3 id="create-a-profile-with-mfa-enabled">Create a profile with MFA enabled</h3>
+<h4 id="create-a-profile-with-mfa-enabled">Create a profile with MFA enabled</h4>
 <p>For endpoints that use browser-based MFA (any identity provider):</p>
 <pre><code class="language-bash">vpnconnect profile add \
   --name work-mfa \
@@ -1282,6 +1395,12 @@
   --store-password=false
 </code></pre>
 <p>See <a href="../connect-with-mfa/">How to connect with MFA</a> for details on both modes.</p>
+<h3 id="from-the-ui">From the UI</h3>
+<p>Click the <strong>+</strong> icon in the Profiles sidebar header. The <strong>Add Profile</strong> form opens with two sections.</p>
+<p><strong>Core Details</strong> — fill in Profile Name, Username, Endpoint URL, and Password. Check <strong>MFA Enabled</strong> if your endpoint requires browser-based authentication.</p>
+<p><img alt="Add Profile — Core Details section" src="../../assets/add_profile_0.png" /></p>
+<p><strong>Network Configuration</strong> — optionally set Custom Routes, Custom DNS, Custom Search Domains, MTU, and transport options. Click <strong>Save Profile</strong> when done.</p>
+<p><img alt="Add Profile — Network Configuration section and Save button" src="../../assets/add_profile_2.png" /></p>
 <hr />
 <h2 id="list-profiles">List profiles</h2>
 <pre><code class="language-bash">vpnconnect profile list
@@ -1305,9 +1424,13 @@ work-mfa   https://vpn.example.com    alice     Yes  No         2026-03-01
 </code></pre>
 <hr />
 <h2 id="remove-a-profile">Remove a profile</h2>
+<h3 id="from-the-cli_1">From the CLI</h3>
 <pre><code class="language-bash">vpnconnect profile remove --name work
 </code></pre>
 <p>You will be asked to confirm. The profile file and its keychain entry are both deleted.</p>
+<h3 id="from-the-ui_1">From the UI</h3>
+<p>Select the profile in the sidebar, then click <strong>Delete Profile</strong> (red button) in the detail panel.</p>
+<p><img alt="Profile detail panel — Connect, Edit Profile, and Delete Profile buttons" src="../../assets/connect.png" /></p>
 <hr />
 <h2 id="export-and-import-profiles">Export and import profiles</h2>
 <p>Exporting saves profile configuration to a JSON file so you can back it up or move it to another machine. <strong>Passwords are never included in exports</strong> — you will need to re-enter them after importing.</p>

@@ -511,6 +511,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#using-the-desktop-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using the desktop UI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using the desktop UI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create a profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connect
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1184,6 +1234,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#using-the-desktop-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using the desktop UI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using the desktop UI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create a profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connect
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1203,7 +1303,7 @@
 
 <h1 id="getting-started-your-first-vpn-connection">Getting started: your first VPN connection</h1>
 <p>In this tutorial we will install VPNConnect, create a VPN profile, connect to the VPN, verify the connection is working, and then disconnect cleanly. By the end you will have made a complete round-trip and will know the core workflow.</p>
-<p>We will use the CLI throughout. The UI app wraps the same operations in a graphical interface; once you understand the CLI, the UI will feel familiar.</p>
+<p>This tutorial has two tracks — <strong>CLI</strong> and <strong>desktop UI</strong>. The steps are identical; choose whichever suits you. The CLI track runs from Step 1 to Step 6 below. If you prefer a graphical interface, skip to <a href="#using-the-desktop-ui">Using the desktop UI</a> at the bottom.</p>
 <hr />
 <h2 id="what-you-will-need">What you will need</h2>
 <ul>
@@ -1320,6 +1420,43 @@ Packet statistics:
 <li><strong>Want to explore all commands?</strong> Read the <a href="../../reference/cli/">CLI reference</a>.</li>
 <li><strong>Curious how it works?</strong> See <a href="../../explanation/architecture/">Architecture: daemon, IPC, and connection lifecycle</a>.</li>
 </ul>
+<hr />
+<h2 id="using-the-desktop-ui">Using the desktop UI</h2>
+<p>The desktop UI covers the same workflow — create a profile, connect, disconnect — without a terminal.</p>
+<h3 id="launch">Launch</h3>
+<p>Open VPNConnect from your applications menu or run <code>vpnconnect</code> without arguments. On first launch the window shows the welcome screen with an empty profile list.</p>
+<p><img alt="VPNConnect welcome screen — no profiles yet" src="../../assets/empty.png" /></p>
+<p>The left sidebar shows <strong>Profiles</strong>. The three icons in the header are: export all profiles (↑), import profiles (↓), and add a new profile (+).</p>
+<hr />
+<h3 id="create-a-profile">Create a profile</h3>
+<p>Click the <strong>+</strong> icon in the Profiles header. The <strong>Add Profile</strong> form opens.</p>
+<p><img alt="Add Profile form — Core Details section" src="../../assets/add_profile_0.png" /></p>
+<p>Fill in:</p>
+<ul>
+<li><strong>Profile Name</strong> — a label for this connection (e.g. <code>Office VPN</code>).</li>
+<li><strong>Username</strong> — your VPN account username.</li>
+<li><strong>Endpoint URL</strong> — the HTTPS address of your VPN gateway.</li>
+<li><strong>Password</strong> — stored in the OS keychain; leave blank to be prompted at connect time.</li>
+<li><strong>MFA Enabled</strong> — check this if your endpoint uses browser-based multi-factor authentication (see <a href="../../how-to/connect-with-mfa/">How to connect with MFA</a>).</li>
+</ul>
+<p>Scroll down to <strong>Network Configuration</strong> to set optional overrides:</p>
+<p><img alt="Add Profile form — Network Configuration section and Save button" src="../../assets/add_profile_2.png" /></p>
+<ul>
+<li><strong>Custom Routes</strong> — additional CIDR ranges to route through the VPN.</li>
+<li><strong>Custom DNS</strong> — DNS servers to use while connected.</li>
+<li><strong>Custom Search Domains</strong> — DNS search domains appended to unqualified hostnames.</li>
+<li><strong>Merge DNS</strong> — combine server-provided DNS with profile DNS instead of replacing it.</li>
+<li><strong>Parse PAC Search Domains</strong> — extract search domains from the server's PAC file.</li>
+<li><strong>Disable DTLS</strong> — force TLS-only data channel (slower but more compatible).</li>
+<li><strong>MTU</strong> — override the tunnel MTU (default 1400).</li>
+</ul>
+<p>Click <strong>Save Profile</strong> when done.</p>
+<hr />
+<h3 id="connect">Connect</h3>
+<p>Select the profile in the sidebar. The detail panel shows the endpoint, username, and current status.</p>
+<p><img alt="Profile detail panel with Connect, Edit Profile, and Delete Profile buttons" src="../../assets/connect.png" /></p>
+<p>Click <strong>Connect</strong>. The UI updates the status bar at the top once the tunnel is established. Click <strong>Disconnect</strong> (same button, label changes) to tear down the connection cleanly.</p>
+<p>The link icon (🔗) and pencil icon (✏) in the sidebar row are shortcuts to connect and edit without opening the detail panel.</p>
 
 
 
